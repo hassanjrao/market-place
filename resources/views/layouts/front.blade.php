@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ config('app.name') }}</title>
+    <title>@yield('page-title') - {{ config('app.name') }} </title>
     <link rel="icon" href="{{ asset('front-assets/img/icon.png') }}" type="image/gif" sizes="16x16">
     <link rel="icon" href="{{ asset('front-assets/img/icon.png') }}" type="image/gif" sizes="18x18">
     <link rel="icon" href="{{ asset('front-assets/img/icon.png') }}" type="image/gif" sizes="20x20">
@@ -22,6 +22,13 @@
     <link rel="stylesheet" href="{{ asset('front-assets/css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('front-assets/style.css') }}">
     <link rel="stylesheet" href="{{ asset('front-assets/css/responsive.css') }}">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @include('sweetalert::alert')
+
+
+    @livewireStyles
 
 </head>
 
@@ -57,7 +64,7 @@
                         <!-- Login -->
                         <div class="header-login">
                             @if (auth()->user())
-                                <a  onclick="document.getElementById('logout-form').submit()">
+                                <a onclick="document.getElementById('logout-form').submit()">
                                     {{-- logout icon --}}
                                     <i class="far fa-user"></i> <span>Log Out</span>
 
@@ -75,9 +82,19 @@
                         </form>
                         <!-- Cart -->
                         <div class="mini-cart">
-                            <a href="javascript:void(0);">
-                                <i class="fas fa-shopping-cart"></i> <span>03</span>
+
+                            <a href="{{ route('carts.index') }}" id="cartHeaderIcon"
+                                class="{{ request()->segment(1) == 'carts' ? ' active' : '' }}">
+                                <i class="fas fa-shopping-cart"></i> <span id="cartHeaderIconValue">
+                                    {{ session()->has('cart') && isset(session('cart')['products']) ? count(session('cart')['products']) : '0' }}
+                                </span>
+
                             </a>
+
+                            <input type="hidden" id="cartHiddenField"
+                                value="{{ session()->has('cart') && isset(session('cart')['products']) ? count(session('cart')['products']) : 0 }}">
+
+
                         </div>
                         <div class="canvas_open">
                             <a href="javascript:void(0)">
@@ -92,11 +109,14 @@
                         <nav>
                             <ul>
 
-                                <li><a href="product.html">Home</a></li>
-                                <li><a href="product.html">News Feed</a></li>
+                                <li><a class="{{ request()->segment(1) == '' ? ' active' : '' }}"
+                                        href="{{ route('home') }}">Home</a></li>
+                                <li><a class="{{ request()->segment(1) == 'news-feeds' ? ' active' : '' }}"
+                                        href="{{ route('news-feeds.index') }}">News Feed</a></li>
 
                                 <li><a href="product.html">Categories</a></li>
-                                <li><a href="product.html">Products</a></li>
+                                <li><a class="{{ request()->segment(1) == 'products' ? ' active' : '' }}"
+                                        href="{{ route('products.index') }}">Products</a></li>
 
                                 @if (auth()->user())
                                     <li><a href="contact.html">Profile</a></li>
@@ -130,15 +150,15 @@
                     <ul class="offcanvas_main_menu">
 
 
-                        <li class="menu-item-has-children">
-                            <a href="contact.html"> Home</a>
-                        </li>
+                        <li><a class="{{ request()->segment(1) == '' ? ' active' : '' }}"
+                                href="{{ route('home') }}">Home</a></li>
+                        <li><a class="{{ request()->segment(1) == 'news-feeds' ? ' active' : '' }}"
+                                href="{{ route('news-feeds.index') }}">News Feed</a></li>
 
-
-                        <li><a href="product.html">News Feed</a></li>
 
                         <li><a href="product.html">Categories</a></li>
-                        <li><a href="product.html">Products</a></li>
+                        <li><a class="{{ request()->segment(1) == 'products' ? ' active' : '' }}"
+                                href="{{ route('products.index') }}">Products</a></li>
 
                         <li class="menu-item-has-children">
                             <a href="contact.html"> Profile</a>
@@ -148,7 +168,7 @@
                 </div>
                 <div class="mobile-menu-login">
                     @if (auth()->user())
-                        <a  onclick="document.getElementById('logout-form').submit()">
+                        <a onclick="document.getElementById('logout-form').submit()">
                             <i class="far fa-user"></i> <span>Log Out</span>
                         </a>
                     @else
@@ -163,85 +183,23 @@
     <!--offcanvas menu area end-->
     <!-- End Mobile Menu Area -->
 
-    <!-- Start MinCart Area -->
-    <div class="off_canvars_overlay">
 
-    </div>
-    <div class="mini-cart-area">
-        <div class="mini-cart-full">
-            <div class="mini-cart-header">
-                <h2>Shopping cart</h2>
-                <div class="mini-cart-close">
-                    <i class="bi bi-x"></i>
+    @if (request()->segment(1) != '')
+        <div class="breadcrumb-area pt-30 pb-30 section-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumb-content">
+                            <ul>
+                                <li><a href="{{ route('home') }}">Home</a></li>
+                                <li class="active">@yield('page-title')</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="mini-cart-full">
-                <div class="cartmini__inner">
-                    <ul>
-                        <!-- Single -->
-                        <li>
-                            <div class="thumbnail">
-                                <a href="product-details.html">
-                                    <img src="{{ asset('front-assets/img/mc1.png') }}" alt="img">
-                                </a>
-                            </div>
-                            <div class="content">
-                                <h4><a href="product-details.html">LearnUp - Online LMS WordPress Theme</a></h4>
-                                <div class="m-price">
-                                    <span>$39 x 2</span>
-                                </div>
-                                <div class="remove">
-                                    <a href="javascript:void(0);"><i class="bi bi-x"></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Single -->
-                        <li>
-                            <div class="thumbnail">
-                                <a href="product-details.html">
-                                    <img src="{{ asset('front-assets/img/mc2.png') }}" alt="img">
-                                </a>
-                            </div>
-                            <div class="content">
-                                <h4><a href="product-details.html">Cario - Digital WordPress Theme</a></h4>
-                                <div class="m-price">
-                                    <span>$39 x 2</span>
-                                </div>
-                                <div class="remove">
-                                    <a href="javascript:void(0);"><i class="bi bi-x"></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Single -->
-                        <li>
-                            <div class="thumbnail">
-                                <a href="product-details.html">
-                                    <img src="{{ asset('front-assets/img/mc3.png') }}" alt="img">
-                                </a>
-                            </div>
-                            <div class="content">
-                                <h4><a href="product-details.html">LearnUp - Online LMS WordPress Theme</a></h4>
-                                <div class="m-price">
-                                    <span>$39 x 2</span>
-                                </div>
-                                <div class="remove">
-                                    <a href="javascript:void(0);"><i class="bi bi-x"></i></a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mini-cart-bottom">
-                <h4>SubTotal : <span>$203.00</span></h4>
-                <a class="button-2" href="cart.html">View Cart</a>
-                <a class="button-1" href="checkout.html">Checkout Now</a>
             </div>
         </div>
-    </div>
-    <!-- End MinCart Area -->
-
-
+    @endif
     @yield('content')
 
     <!-- Start Footer Area -->
@@ -363,6 +321,63 @@
     <script src="{{ asset('front-assets/js/ajax-form.js') }}"></script>
     <script src="{{ asset('front-assets/js/mobile-menu.js') }}"></script>
     <script src="{{ asset('front-assets/js/script.js') }}"></script>
+
+    @livewireScripts
+
+
+    <script>
+        function showStatus(message, type = 'success', toast = true) {
+
+
+
+            if (type == "success") {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                if (toast) {
+                    Toast.fire({
+                        icon: type,
+                        title: message,
+                    })
+                } else {
+                    Swal.fire({
+                        icon: type,
+                        title: message,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false,
+                    })
+                }
+            } else if (type == "error") {
+
+                Swal.fire({
+                    icon: type,
+                    title: message,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                })
+
+
+            }
+
+        }
+    </script>
+
+
+    @yield('js-after')
+
+    @stack("scripts")
+
 </body>
 
 <!-- Mirrored from preetheme.com/html/dmark/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 13 Aug 2023 16:14:51 GMT -->
