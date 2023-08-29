@@ -36,6 +36,17 @@ class ProductController extends Controller
         return view("front.products.index",compact("products","categories"));
     }
 
+    public function userProducts()
+    {
+        $products=Product::with(["createdBy","category","images"])
+        ->where("created_by",auth()->user()->id)
+        ->latest()
+        ->paginate(20);
+
+       return view("front.profile.products",compact("products"));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

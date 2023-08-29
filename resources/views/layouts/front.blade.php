@@ -119,7 +119,7 @@
                                         href="{{ route('products.index') }}">Products</a></li>
 
                                 @if (auth()->user())
-                                    <li><a href="contact.html">Profile</a></li>
+                                    <li><a class="{{ request()->segment(1) == 'profile' ? ' active' : '' }}" href="{{ route("profile.index") }}">Profile</a></li>
                                 @endif
                             </ul>
                         </nav>
@@ -161,7 +161,7 @@
                                 href="{{ route('products.index') }}">Products</a></li>
 
                         <li class="menu-item-has-children">
-                            <a href="contact.html"> Profile</a>
+                            <a class="{{ request()->segment(1) == 'products' ? ' active' : '' }}" href="{{ route("profile.index") }}"> Profile</a>
                         </li>
 
                     </ul>

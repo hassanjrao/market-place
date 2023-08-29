@@ -12,6 +12,13 @@ class Order extends Model
 
     protected $guarded=[];
 
+    protected $append=["order_id","status_name"];
+
+    public function getOrderIdAttribute()
+    {
+        return "#ORD".str_pad($this->id, 6, "0", STR_PAD_LEFT);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, "user_id");
@@ -20,5 +27,19 @@ class Order extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class, "order_id");
+    }
+
+    public static function statuses(){
+        return [
+            "pending"=>"Pending",
+            "processing"=>"Processing",
+            "completed"=>"Completed",
+            "declined"=>"Declined"
+        ];
+    }
+
+    public function getStatusNameAttribute()
+    {
+        return self::statuses()[$this->status];
     }
 }
