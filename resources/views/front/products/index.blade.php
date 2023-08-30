@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-8">
                             <div class="product-sorting-list">
                                 <span><b>Sort By :</b></span>
                                 <span><a href="javascript:void();">Best Metch</a></span>
@@ -42,6 +42,13 @@
                                 <span><a href="javascript:void();">Trending</a></span>
                                 <span><a href="javascript:void();">Price</a></span>
                             </div>
+                        </div>
+
+                        <div class="col-4">
+                           {{-- create product button --}}
+                           <div class="product-sorting-list">
+                            <a  href="{{ route('products.create') }}" class="btn btn-sm btn-primary" >Add Product</a>
+                           </div>
                         </div>
                     </div>
                     <div class="row mt-40">

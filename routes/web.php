@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\NewsFeedController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -20,13 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Example Routes
-Route::view('/', 'front.home')->name('landing');
-Route::match(['get', 'post'], '/dashboard', function(){
-    return view('dashboard');
-});
-Route::view('/pages/slick', 'pages.slick');
-Route::view('/pages/datatables', 'pages.datatables');
-Route::view('/pages/blank', 'pages.blank');
+Route::get("/",[LandingPageController::class,"index"])->name("front.landing");
 
 Auth::routes();
 

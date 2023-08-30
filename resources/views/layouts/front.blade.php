@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('page-title') - {{ config('app.name') }} </title>
-    <link rel="icon" href="{{ asset('front-assets/img/icon.png') }}" type="image/gif" sizes="16x16">
-    <link rel="icon" href="{{ asset('front-assets/img/icon.png') }}" type="image/gif" sizes="18x18">
-    <link rel="icon" href="{{ asset('front-assets/img/icon.png') }}" type="image/gif" sizes="20x20">
+    <link rel="icon" href="{{ asset('media/logos/fav.png') }}" type="image/gif" sizes="16x16">
+    <link rel="icon" href="{{ asset('media/logos/fav.png') }}" type="image/gif" sizes="18x18">
+    <link rel="icon" href="{{ asset('media/logos/fav.png') }}" type="image/gif" sizes="20x20">
 
     <link rel="stylesheet" href="{{ asset('front-assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front-assets/css/bootstrap-icons.css') }}">
@@ -53,8 +53,8 @@
                 <div class="col-lg-2 col-sm-4  col-6 align-self-center">
                     <div class="logo">
                         <a href="index.html">
-                            {{-- <img src="{{ asset('front-assets/img/logo.png') }}" alt="logo"> --}}
-                            LOGO
+                            <img src="{{ asset('media/logos/main_logo.png') }}" alt="logo">
+
                         </a>
                     </div>
                 </div>
@@ -110,11 +110,10 @@
                             <ul>
 
                                 <li><a class="{{ request()->segment(1) == '' ? ' active' : '' }}"
-                                        href="{{ route('home') }}">Home</a></li>
+                                        href="{{ route('front.landing') }}">Home</a></li>
                                 <li><a class="{{ request()->segment(1) == 'news-feeds' ? ' active' : '' }}"
                                         href="{{ route('news-feeds.index') }}">News Feed</a></li>
 
-                                <li><a href="product.html">Categories</a></li>
                                 <li><a class="{{ request()->segment(1) == 'products' ? ' active' : '' }}"
                                         href="{{ route('products.index') }}">Products</a></li>
 
@@ -143,7 +142,7 @@
                 </div>
                 <div class="mobile-logo">
                     <a href="index.html">
-                        <img src="{{ asset('front-assets/img/logo.png') }}" alt="logo">
+                        <img src="{{ asset('media/logos/main_logo.png') }}" alt="logo">
                     </a>
                 </div>
                 <div id="menu" class="text-left ">
@@ -156,7 +155,6 @@
                                 href="{{ route('news-feeds.index') }}">News Feed</a></li>
 
 
-                        <li><a href="product.html">Categories</a></li>
                         <li><a class="{{ request()->segment(1) == 'products' ? ' active' : '' }}"
                                 href="{{ route('products.index') }}">Products</a></li>
 
@@ -247,44 +245,7 @@
                         </div>
                     </div>
                     <!-- Single -->
-                    <div class="col-lg-3 col-xl-2 col-md-6 mb-30">
-                        <div class="footer-widgets-single">
-                            <h3>Products </h3>
-                            <ul class="footer-menu">
-                                <li><a href="#">Tutor LMS </a></li>
-                                <li><a href="#">WP Mega Menu </a></li>
-                                <li><a href="#">WP Page Builder </a></li>
-                                <li><a href="#">Themes</a></li>
-                                <li><a href="#">Interactions</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Single -->
-                    <div class="col-lg-3 col-xl-2 col-md-6 mb-30">
-                        <div class="footer-widgets-single">
-                            <h3>Need Help? </h3>
-                            <ul class="footer-menu">
-                                <li><a href="#">Help Center</a></li>
-                                <li><a href="#">Foxtar Market Terms</a></li>
-                                <li><a href="#">Author Terms</a></li>
-                                <li><a href="#">Foxtar Licenses</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Single -->
-                    <div class="col-lg-3 col-xl-2 col-md-6 mb-30">
-                        <div class="footer-widgets-single">
-                            <h3>Category</h3>
-                            <ul class="footer-menu">
-                                <li><a href="#">Site Template</a></li>
-                                <li><a href="#">WordPress Themes</a></li>
-                                <li><a href="#">UI Template</a></li>
-                                <li><a href="#">Elementor Kit</a></li>
-                                <li><a href="#">eCommerce Template</a></li>
-                            </ul>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -293,8 +254,9 @@
                 <div class="row">
                     <div class="col-12 text-center">
                         <div class="copy-text">
-                            <p>&copy; 2021 Dmark. Designd By <a href="#"><b>CodexUnicTheme</b></a> All Rights
-                                Reserved</p>
+                            <p>&copy; 2023 {{ config("app.name") }}
+
+                            </p>
                         </div>
                     </div>
                 </div>

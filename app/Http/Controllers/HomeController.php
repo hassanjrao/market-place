@@ -27,7 +27,7 @@ class HomeController extends Controller
         if ($user->hasRole('admin')) {
             return '/admin';
         } elseif ($user->hasRole('user')) {
-            return redirect()->route("landing");
+            return redirect()->route("news-feeds.index");
         } else {
             // logout if user has no role
             auth()->logout();
