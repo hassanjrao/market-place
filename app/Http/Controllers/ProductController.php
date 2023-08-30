@@ -54,7 +54,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $product=null;
+
+        $categories=Category::latest()->get();
+
+        return view("front.products.add_edit",compact("product","categories"));
     }
 
     /**
@@ -65,7 +69,30 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "image"=>"required|image",
+            "category"=>"required|exists:categories,id",
+            "title"=>"required",
+            "price"=>"required|numeric",
+        ]);
+
+        $image=$request->file("image")->store("products");
+
+        $product=Product::create([
+            "title"=>$request->title,
+            "description"=>$request->description,
+            "category_id"=>$request->category,
+            "created_by"=>auth()->user()->id,
+            "price"=>$request->price,
+        ]);
+
+        $product->images()->create([
+            "image"=>$image,
+            "is_main"=>1,
+        ]);
+
+        return redirect()->route("products.index")->with("success","Product added successfully");
+
     }
 
     /**

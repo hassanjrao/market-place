@@ -52,8 +52,8 @@
                                 <div class="product-item">
                                     <!-- thumbnail -->
                                     <div class="thumbnail">
-                                        <a href="product-details.html">
-                                            <img src="{{ $product->main_image }}" alt="thumbnial">
+                                        <a href="#">
+                                            <img src="{{ $product->main_image_url }}" alt="thumbnial" height="200px">
                                         </a>
                                         {{-- <div class="badge trending">
                                             <span>Trending</span>
@@ -61,7 +61,7 @@
                                     </div>
                                     <!-- content -->
                                     <div class="content">
-                                        <h3><a href="product-details.html">{{ $product->title }}</a></h3>
+                                        <h3><a href="#">{{ $product->title }}</a></h3>
                                         <div class="meta">
                                             <span>by <a href="#">{{ $product->createdBy->name }}</a></span>
                                             <span>in <a href="#">{{ $product->category->title }}</a></span>

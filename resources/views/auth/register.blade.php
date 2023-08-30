@@ -1,5 +1,6 @@
 @extends('layouts.front')
 
+@section("page-title", "Register")
 
 @section('content')
 

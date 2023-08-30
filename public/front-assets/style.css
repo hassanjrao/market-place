@@ -502,7 +502,7 @@ img {
 	position: relative;
 	margin-bottom: 25px;
 }
-.login-register-form-middle .single-input input {
+.login-register-form-middle .single-input input,select {
 	width: 100%;
 	position: relative;
 	border: 1px solid #eee;
