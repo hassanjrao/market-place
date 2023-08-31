@@ -39,4 +39,16 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    // check if user is admin or not
+    protected function redirectTo()
+    {
+        if (auth()->user()->hasRole('admin')) {
+            return '/admin';
+        }
+
+        else {
+            return '/';
+        }
+    }
+
 }

@@ -66,8 +66,9 @@ class PaymentController extends Controller
             ]);
         }
 
-        dd("success");
+        // empty cart session
+        session()->forget("cart.products");
 
-        return redirect()->route("profile.index",["booking"=>true])->withToastSuccess("Booking completed successfully");
+        return redirect()->route("orders.user")->with('toast_success', 'Order created successfully!');
     }
 }

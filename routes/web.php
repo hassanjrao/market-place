@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\NewsFeedController;
@@ -45,5 +51,19 @@ Route::middleware(["auth"])->group(function () {
     Route::get("orders/{id}/details", [UserProfileController::class, "orderDetails"])->name("orders.details");
     Route::get("orders/user", [UserProfileController::class, "userOrders"])->name("orders.user");
     Route::resource('profile', UserProfileController::class);
+
+});
+
+
+
+Route::prefix("admin")->name("admin.")->middleware(["auth","role:admin"])->group(function () {
+
+    Route::get("/", [AdminDashboardController::class, "index"])->name("dashboard");
+    Route::resource("users",AdminUserController::class);
+
+    Route::resource("products",AdminProductController::class);
+    Route::resource("categories", AdminCategoryController::class);
+    Route::resource("orders",AdminOrderController::class);
+    Route::resource("profile",AdminProfileController::class);
 
 });

@@ -91,7 +91,7 @@ class Cart extends Component
                 "original_price"=>$product->price,
                 "total_price"=>$product->price,
                 "quantity"=>1,
-                "main_image"=>$product->main_image,
+                "main_image"=>$product->main_image_url,
             ];
 
         });
